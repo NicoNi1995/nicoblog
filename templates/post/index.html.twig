@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NicoBlog{% endblock %}
+
+{% block body %}
+    <h1>NicoBlog List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Summary</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>UpdateAt</th>
+                <th>PostImage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+{#            {{ dump(post) }}#}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.body|raw }}</td>
+                <td>{{ post.summary }}</td>
+                <td>{{ post.status }}</td>
+                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ post.updateAt ? post.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {% if post.postImage is not null %}
+{#                    <img src="/uploads/images/{{post.postImage}}"></td>#}
+                        <img src={{ asset(post.postImage,'file_upload')}} width="100"></td>
+                    {% endif %}
+                <td>
+                    <a href="{{ path('post_show', {'id': post.id}) }}">show</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
