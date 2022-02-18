@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
+    #[ORM\OrderBy(['id'=>"DESC"])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    private $comments;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -33,8 +37,8 @@ class Post
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updateAt;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
-    private $comments;
+
+
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $postImage;
